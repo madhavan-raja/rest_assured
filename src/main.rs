@@ -1,10 +1,10 @@
 use clap::Parser;
 mod cli;
 mod config;
-mod terminal_mode;
+mod tui;
 
 use cli::Cli;
-use terminal_mode::TerminalMode;
+use tui::Tui;
 
 fn main() -> std::io::Result<()> {
     let args = Cli::parse();
@@ -14,10 +14,9 @@ fn main() -> std::io::Result<()> {
 
     match mode {
         cli::Mode::Terminal => {
-            let terminal_mode = TerminalMode::new(config);
-            terminal_mode.start()?;
+            let terminal = Tui::new(config);
+            terminal.start()?;
         }
-        cli::Mode::Web => println!("Running in web mode"),
     }
 
     Ok(())
